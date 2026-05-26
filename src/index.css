@@ -1,39 +1,27 @@
-@import url("https://fonts.googleapis.com/css2?family=Alice&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "tailwindcss";
+@import "swiper/css";
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/scrollbar';
+
+@import url("https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap");
 
 :root {
-  --primary-color: #04b90b;
-  --neutral-8: #fcfcfd;
-  --neutral-7: #f4f5f6;
-  --neutral-6: #e6e8ec;
-  --neutral-5: #b1b5c3;
-  --neutral-4: #777e90;
-  --neutral-3: #353945;
-  --neutral-2: #23262f;
-  --neutral-1: #141416;
-  --color-tag-text-1: #04b90b;
-  --color-tag-text-2: #ea8484;
-  --color-tag-text-3: #106aab;
-  --color-tag-text-4: #f25178;
-  --color-tag-text-5: #8d31e9;
-  --color-tag-text-6: #da9f0a;
-  --color-tag-text-7: #26aca0;
-  --color-tag-text-8: #3304b9;
-  --color-tag-back-ground-1: #d3f9d5;
-  --color-tag-back-ground-2: #fcf1f1;
-  --color-tag-back-ground-3: #f1f7fc;
-  --color-tag-back-ground-4: #fce5e9;
-  --color-tag-back-ground-5: #f6eefd;
-  --color-tag-back-ground-6: #fcf6d8;
-  --color-tag-back-ground-7: #edfcfb;
-  --color-tag-back-ground-8: #f2effd;
-  --font-family: "Poppins", sans-serif;
-  --second-family: "Alice", sans-serif;
+  --font-family: "Inter", sans-serif;
+  --second-family: "Manrope", sans-serif;
+  --third-family: "Roboto Flex", sans-serif;
+  --font3: "Arial", sans-serif;
+  --font4: "Dela Gothic One", sans-serif;
 }
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+@theme {
+  --font-family: "Inter", sans-serif;
+  --second-family: "Manrope", sans-serif;
+  --third-family: "Roboto Flex", sans-serif;
+  --font3: "Arial", sans-serif;
+  --font4: "Dela Gothic One", sans-serif;
+
+  --color-btn-bg: #0074d4;
 }
 
 a {

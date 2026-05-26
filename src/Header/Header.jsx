@@ -1,20 +1,17 @@
-import CustomButton from "../CustomButton/CustomButton";
-
 import "./Header.css";
 
 function Header() {
   return (
     <header>
       <div className="container">
-        <img src="/Logo.png" alt="" />
         <div className="header-right">
           <nav>
-            <a href="">Home</a>
-            <a href="">Home</a>
-            <a href="">Home</a>
-            <a href="">Home</a>
+            <a href="/">Главная</a>
+            <a href="/about">О продукте</a>
+            <a href="">Отзывы</a>
+            <a href="">Доставка и оплата</a>
+            <a href="">Контакты</a>
           </nav>
-          <CustomButton>ORDER NOW</CustomButton>
         </div>
       </div>
     </header>
