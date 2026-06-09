@@ -45,7 +45,6 @@ export const Catalog = () => {
 
   return (
     <div className="container pb-20">
-      <h1 className="text-center font-bold">Каталог кресел</h1>
       <div className="container  pt-[100px] pb-[50px] flex flex-wrap text-center gap-4.5">
         {data &&
           data.map((el) => (
