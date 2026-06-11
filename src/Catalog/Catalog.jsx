@@ -9,18 +9,18 @@ export const Catalog = () => {
   const totalPage = Math.ceil(totalData.length / 10);
 
   const handleNext = () => {
-    if(page === totalPage)return;
+    if (page === totalPage) return;
     setPage((prev) => prev + 1);
   };
 
-  const handlePrev = ()=>{
-    if(page === 1)return;
-    setPage((prev)=>prev-1)
-  }
+  const handlePrev = () => {
+    if (page === 1) return;
+    setPage((prev) => prev - 1);
+  };
 
   useEffect(() => {
     axios("http://localhost:3000/armchairs").then(({ data }) =>
-      setTotalData(data),
+      setTotalData(data)
     );
   }, []);
 
@@ -49,7 +49,11 @@ export const Catalog = () => {
         {data &&
           data.map((el) => (
             <div className="cards">
-              <img className="w-[278px] h-[333px ]" src="/creslo.png" alt="" />
+              <img
+                className="w-[278px] h-[333px ]"
+                src={el.imageUrl ? el.imageUrl : "/creslo.png"}
+                alt=""
+              />
               <p className="w-[273px]">{el.title}</p>
               <p className="text-2xl font-bold">{el.price}</p>
             </div>
@@ -59,7 +63,11 @@ export const Catalog = () => {
         <button onClick={handlePrev}>назад</button>
         <ul className="flex gap-5">
           {Array.from({ length: totalPage }).map((item, idx) => (
-            <li className={`text-2xl w-10 h-10 border flex items-center justify-center ${(idx+1) === page?"border-red-600":""}` }>
+            <li
+              className={`text-2xl w-10 h-10 border flex items-center justify-center ${
+                idx + 1 === page ? "border-red-600" : ""
+              }`}
+            >
               {idx + 1}
             </li>
           ))}
