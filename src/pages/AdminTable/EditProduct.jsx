@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EMPTY_FORM = {
   title: "",
@@ -13,10 +14,32 @@ const EMPTY_FORM = {
   imageUrl: "",
 };
 
-const CreateProduct = () => {
+const EditProduct = () => {
   const [form, setForm] = useState(EMPTY_FORM);
+  const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(null); // null | "success" | "error"
   const [errorMessage, setErrorMessage] = useState("");
+
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios(`http://localhost:3000/armchairs/${id}`)
+      .then(({ data }) => {
+        setForm({
+          title: data.title ?? "",
+          description: data.description ?? "",
+          price: data.price ?? "",
+          heightChair: data.heightChair ?? "",
+          heightSeat: data.heightSeat ?? "",
+          heightBack: data.heightBack ?? "",
+          seatWidth: data.seatWidth ?? "",
+          color: data.color ?? "",
+          imageUrl: data.imageUrl ?? "",
+        });
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -25,8 +48,7 @@ const CreateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/armchairs", form);
-      setForm(EMPTY_FORM);
+      await axios.put(`http://localhost:3000/armchairs/${id}`, form);
       setModal("success");
     } catch (err) {
       setErrorMessage(
@@ -36,7 +58,18 @@ const CreateProduct = () => {
     }
   };
 
-  const handleCloseModal = () => setModal(null);
+  const handleCloseModal = () => {
+    if (modal === "success") navigate("/admin");
+    setModal(null);
+  };
+
+  if (loading) {
+    return (
+      <div className="container py-10 px-4 flex items-center justify-center min-h-60">
+        <p className="text-gray-400 text-sm">Загрузка...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container py-10 px-4">
@@ -60,9 +93,9 @@ const CreateProduct = () => {
                     />
                   </svg>
                 </div>
-                <h2 className="text-xl font-bold mb-2">Товар создан!</h2>
+                <h2 className="text-xl font-bold mb-2">Изменения сохранены!</h2>
                 <p className="text-gray-500 text-sm mb-6">
-                  Новый товар успешно добавлен в каталог.
+                  Товар успешно обновлён.
                 </p>
               </>
             ) : (
@@ -95,12 +128,33 @@ const CreateProduct = () => {
           </div>
         </div>
       )}
-      <h1 className="text-3xl font-bold uppercase mb-8 tracking-wide">
-        Создание нового товара
-      </h1>
+
+      <div className="flex items-center gap-4 mb-8">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-gray-400 hover:text-gray-700 transition cursor-pointer"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
+        <h1 className="text-3xl font-bold uppercase tracking-wide">
+          Редактирование товара
+        </h1>
+      </div>
 
       <form
-        onSubmit={(e) => handleSubmit(e)}
+        onSubmit={handleSubmit}
         className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8 max-w-2xl"
       >
         {/* Название */}
@@ -114,7 +168,7 @@ const CreateProduct = () => {
             value={form.title}
             onChange={handleChange}
             placeholder="Кресло Samurai S-2.04"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#0074d4] transition"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-btn-bg transition"
           />
         </div>
 
@@ -144,7 +198,7 @@ const CreateProduct = () => {
             value={form.imageUrl}
             onChange={handleChange}
             placeholder="https://example.com/image.jpg"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#0074d4] transition"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-btn-bg transition"
           />
           {form.imageUrl && (
             <div className="mt-3 w-40 h-40 rounded-lg overflow-hidden border border-gray-200">
@@ -171,7 +225,7 @@ const CreateProduct = () => {
               onChange={handleChange}
               placeholder="22000"
               min={0}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#0074d4] transition"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-btn-bg transition"
             />
           </div>
           <div>
@@ -184,7 +238,7 @@ const CreateProduct = () => {
               value={form.color}
               onChange={handleChange}
               placeholder="Серый"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#0074d4] transition"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-btn-bg transition"
             />
           </div>
         </div>
@@ -205,7 +259,7 @@ const CreateProduct = () => {
               onChange={handleChange}
               placeholder="1200"
               min={0}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#0074d4] transition"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-btn-bg transition"
             />
           </div>
           <div>
@@ -219,7 +273,7 @@ const CreateProduct = () => {
               onChange={handleChange}
               placeholder="500"
               min={0}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#0074d4] transition"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-btn-bg transition"
             />
           </div>
           <div>
@@ -233,7 +287,7 @@ const CreateProduct = () => {
               onChange={handleChange}
               placeholder="780"
               min={0}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#0074d4] transition"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-btn-bg transition"
             />
           </div>
           <div>
@@ -247,17 +301,20 @@ const CreateProduct = () => {
               onChange={handleChange}
               placeholder="560"
               min={0}
-              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-[#0074d4] transition"
+              className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-btn-bg transition"
             />
           </div>
         </div>
 
-        <button className="w-full bg-[#0074d4] hover:bg-[#005fad] text-white font-semibold py-3 rounded-lg transition text-sm tracking-wide cursor-pointer">
-          Создать товар
+        <button
+          type="submit"
+          className="w-full bg-btn-bg hover:bg-[#005fad] text-white font-semibold py-3 rounded-lg transition text-sm tracking-wide cursor-pointer"
+        >
+          Сохранить изменения
         </button>
       </form>
     </div>
   );
 };
 
-export default CreateProduct;
+export default EditProduct;
