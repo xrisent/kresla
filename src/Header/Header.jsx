@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [data, setData] = useState();
@@ -55,8 +56,8 @@ function Header() {
         </div>
         <div>
           <nav className="flex gap-[34px]">
-            <a href="/">Главная</a>
-            <a href="/catalog">Каталог</a>
+            <Link to="/">Главная</Link>
+            <Link to="/catalog">Каталог</Link>
             <a href="/about">О продукте</a>
             <a href="">Отзывы</a>
             <a href="">Доставка и оплата</a>

@@ -15,8 +15,11 @@ export const HeroSection = () => {
         <SwiperSlide className="bg-[url('/HeroBG.png')] bg-hover bg-center">
           <div className="container py-32.75">
             <div className="w-[50%]">
-              <h1 className="mb-[21px] text-[54px] font-black text-[#2b3350] leading-[120%] font-family">
-                Кресла Samurai на выгодных условиях по всей стране
+              <h1
+               
+                className="mb-[21px] text-[54px] font-black text-[#2b3350] leading-[120%] font-family"
+              >
+                Кресла Samurai на выгодных условиях по всей стране 
               </h1>
               <p className="mb-[32px] font-normal text-[21px] text-[#2b3350] leading-[160%]">
                 Здесь вам не придется покупать товар в слепую — проведите

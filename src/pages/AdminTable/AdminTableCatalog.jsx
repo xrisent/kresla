@@ -14,7 +14,6 @@ const AdminTableCatalog = () => {
     e.stopPropagation();
     axios.delete(`http://localhost:3000/armchairs/${id}`);
   };
-  
 
   return (
     <div className="container py-10 px-4">

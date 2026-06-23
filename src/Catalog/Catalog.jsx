@@ -8,6 +8,8 @@ export const Catalog = () => {
 
   const totalPage = Math.ceil(totalData.length / 10);
 
+  
+
   const handleNext = () => {
     if (page === totalPage) return;
     setPage((prev) => prev + 1);
@@ -45,6 +47,7 @@ export const Catalog = () => {
 
   return (
     <div className="container pb-20">
+    
       <div className="container  pt-[100px] pb-[50px] flex flex-wrap text-center gap-4.5">
         {data &&
           data.map((el) => (
