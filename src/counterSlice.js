@@ -11,9 +11,7 @@ export const counterSlice = createSlice({
     addCount: (state) => {
       if (state.count === 999) return;
 
-     
       state.count = state.count + 1;
-     
     },
     minusCount: (state) => {
       state.count = state.count - 1;
