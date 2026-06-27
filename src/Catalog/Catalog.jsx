@@ -47,6 +47,7 @@ export const Catalog = () => {
     <div className="container pb-20">
       <div className="container  pt-[100px] pb-[50px] flex flex-wrap text-center gap-4.5">
         {data &&
+          data.length > 0 &&
           data.map((el) => (
             <div className="cards">
               <img

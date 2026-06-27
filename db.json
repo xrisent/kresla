@@ -362,6 +362,30 @@
       "heightBack": 835,
       "seatWidth": 610,
       "color": "Зеленый"
+    },
+    {
+      "title": "awfawf",
+      "description": "fawawfawf",
+      "price": "",
+      "heightChair": "",
+      "heightSeat": "",
+      "heightBack": "",
+      "seatWidth": "",
+      "color": "",
+      "imageUrl": "faw",
+      "id": "rpS7wOXIrkc"
+    },
+    {
+      "title": "Кресло",
+      "description": "фцафца",
+      "price": "",
+      "heightChair": "",
+      "heightSeat": "",
+      "heightBack": "",
+      "seatWidth": "",
+      "color": "",
+      "imageUrl": "",
+      "id": "47oYbLg-2Uc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

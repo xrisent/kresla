@@ -18,19 +18,28 @@ const CreateProduct = () => {
   const [modal, setModal] = useState(null); // null | "success" | "error"
   const [errorMessage, setErrorMessage] = useState("");
 
+  // функция, при вызове которой у нас данные записываются в form
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // handleSubmit - создает продукт при вызове
   const handleSubmit = async (e) => {
+    // e.preventDefault() - убирает стандратное поведение при событии
     e.preventDefault();
+    // try catch - нужен для обработки ошибок(если такие возникают)
     try {
+      // блок кода, который try catch пытается выполнить
+      // axios.post кидает запрос на создание продукта
       await axios.post("http://localhost:3000/armchairs", form);
+      // очищаем форму
       setForm(EMPTY_FORM);
+      // показываем модалку что все успешно
       setModal("success");
     } catch (err) {
+      // если ошибка возникает, то выполняется код, который находится в этом блоке
       setErrorMessage(
-        err.response?.data?.message ?? err.message ?? "Неизвестная ошибка"
+        err.response?.data?.message ?? err.message ?? "Неизвестная ошибка",
       );
       setModal("error");
     }
@@ -99,7 +108,9 @@ const CreateProduct = () => {
         Создание нового товара
       </h1>
 
+      {/* form - собирает данные из элементов формы */}
       <form
+        // При отправке формы он вызывает функцию handleSubmit
         onSubmit={(e) => handleSubmit(e)}
         className="bg-white border border-gray-200 rounded-2xl shadow-sm p-8 max-w-2xl"
       >
