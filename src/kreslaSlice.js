@@ -20,6 +20,12 @@ export const fetchData = createAsyncThunk("kresla/fetch", async (params) => {
   return data;
 });
 
+export const createProductFunc = createAsyncThunk("kresla/create", async (form) => {
+  const response = await axios.post("http://localhost:3000/armchairs", form);
+  const { data } = await response;
+  return data;
+});
+
 export const kreslaSlice = createSlice({
   name: "kresla",
   initialState,
@@ -51,6 +57,17 @@ export const kreslaSlice = createSlice({
     builder.addCase(fetchData.rejected, (state, action) => {
       state.status = "failed";
       state.error = action.error.message;
+    });
+
+    builder.addCase(createProductFunc.pending, (state) => {
+      state.status = "loading";
+    });
+    builder.addCase(createProductFunc.fulfilled, (state) => {
+      state.status = "succeeded";
+    });
+    builder.addCase(createProductFunc.rejected, (state) => {
+      state.status = "failed";
+      state.error = 'Ошибка создания продукта'
     });
   },
 });

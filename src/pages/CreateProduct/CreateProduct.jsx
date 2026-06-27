@@ -1,5 +1,7 @@
-import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { createProductFunc } from "../../kreslaSlice";
 
 const EMPTY_FORM = {
   title: "",
@@ -17,6 +19,8 @@ const CreateProduct = () => {
   const [form, setForm] = useState(EMPTY_FORM);
   const [modal, setModal] = useState(null); // null | "success" | "error"
   const [errorMessage, setErrorMessage] = useState("");
+  const { status, error } = useSelector((state) => state.kresla);
+  const dispatch = useDispatch();
 
   // функция, при вызове которой у нас данные записываются в form
   const handleChange = (e) => {
@@ -27,23 +31,19 @@ const CreateProduct = () => {
   const handleSubmit = async (e) => {
     // e.preventDefault() - убирает стандратное поведение при событии
     e.preventDefault();
-    // try catch - нужен для обработки ошибок(если такие возникают)
-    try {
-      // блок кода, который try catch пытается выполнить
-      // axios.post кидает запрос на создание продукта
-      await axios.post("http://localhost:3000/armchairs", form);
-      // очищаем форму
+    await dispatch(createProductFunc(form));
+  };
+
+  useEffect(() => {
+    if (status === "succeeded") {
       setForm(EMPTY_FORM);
-      // показываем модалку что все успешно
       setModal("success");
-    } catch (err) {
-      // если ошибка возникает, то выполняется код, который находится в этом блоке
-      setErrorMessage(
-        err.response?.data?.message ?? err.message ?? "Неизвестная ошибка",
-      );
+    }
+    if (status === "failed") {
+      setErrorMessage(error ?? "Неизвестная ошибка");
       setModal("error");
     }
-  };
+  }, [status]);
 
   const handleCloseModal = () => setModal(null);
 
@@ -263,7 +263,17 @@ const CreateProduct = () => {
           </div>
         </div>
 
-        <button className="w-full bg-[#0074d4] hover:bg-[#005fad] text-white font-semibold py-3 rounded-lg transition text-sm tracking-wide cursor-pointer">
+        <button
+          className={`
+    w-full text-white font-semibold py-3 rounded-lg transition text-sm tracking-wide cursor-pointer
+    ${
+      status === "loading"
+        ? "bg-gray-400 hover:bg-gray-400 cursor-not-allowed"
+        : "bg-[#0074d4] hover:bg-[#005fad]"
+    }
+  `}
+          disabled={status === "loading"}
+        >
           Создать товар
         </button>
       </form>
